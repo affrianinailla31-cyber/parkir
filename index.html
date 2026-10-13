@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Parkir Kendaraan</title>
+</head>
+<body>
+
+    <h2>FORM INPUT PARKIR KENDARAAN</h2>
+
+    <form id="formParkir">
+        <label>No Parkir:</label><br>
+        <input type="text" id="noParkir" required><br><br>
+
+        <label>No Kendaraan:</label><br>
+        <input type="text" id="noKendaraan" required><br><br>
+
+        <label>Jenis Kendaraan:</label><br>
+        <select id="jenisKendaraan" required>
+            <option value=""> Pilih Kendaraan </option>
+            <option value="motor">Motor</option>
+            <option value="mobil">Mobil</option>
+            <option value="truk">Truk</option>
+        </select><br><br>
+
+        <label>Lama Parkir (jam):</label><br>
+        <input type="number" id="lamaParkir" min="1" step="1" required><br><br>
+
+        <label>Nama Petugas:</label><br>
+        <input type="text" id="namaPetugas" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Hasil Pembayaran</h3>
+    <div id="hasil"></div>
+
+    <script>
+        document.getElementById("formParkir").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let noParkir = document.getElementById("noParkir").value;
+            let noKendaraan = document.getElementById("noKendaraan").value;
+            let jenis = document.getElementById("jenisKendaraan").value;
+            let lama = Number(document.getElementById("lamaParkir").value);
+            let petugas = document.getElementById("namaPetugas").value;
+
+            let tarifPertama = 0;
+            let tarifSelanjutnya = 0;
+
+            if (jenis === "motor") {
+                tarifPertama = 3000;
+                tarifSelanjutnya = 2000;
+            } else if (jenis === "mobil") {
+                tarifPertama = 5000;
+                tarifSelanjutnya = 3000;
+            } else if (jenis === "truk") {
+                tarifPertama = 7000;
+                tarifSelanjutnya = 3000;
+            }
+
+            let totalBayar = tarifPertama + (lama - 1) * tarifSelanjutnya;
+
+            document.getElementById("hasil").innerHTML = `
+                <p>No Parkir: ${noParkir}</p>
+                <p>No Kendaraan: ${noKendaraan}</p>
+                <p>Jenis Kendaraan: ${jenis.toUpperCase()}</p>
+                <p>Lama Parkir: ${lama} jam</p>
+                <p>Nama Petugas: ${petugas}</p>
+                <h3>Total Bayar: Rp ${totalBayar.toLocaleString("id-ID")}</h3>
+            `;
+        });
+    </script>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+</body>
+</html>
